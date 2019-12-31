@@ -580,12 +580,9 @@ static int cmd_info(void *data, const char *input) {
 				r_core_bin_info (core, x, mode, va, NULL, y);
 		case 'A': // "iA"
 			newline = false;
-			if (input[1] == 'j') {
-				r_cons_printf ("{");
-				r_bin_list_archs (core->bin, 'j');
-				r_cons_printf ("}\n");
-			} else {
-				r_bin_list_archs (core->bin, 1);
+			{
+				int mode = (input[1] == 'j')? 'j': 1;
+				r_bin_list_archs (core->bin, mode);
 			}
 			break;
 		case 'E': // "iE"
@@ -950,7 +947,7 @@ static int cmd_info(void *data, const char *input) {
 			RBININFO ("versioninfo", R_CORE_BIN_ACC_VERSIONINFO, NULL, 0);
 			break;
 		case 'T': // "iT"
-		case 'C': // "iC" // rabin2 -C create
+		case 'C': // "iC" // rabin2 -C create // should be deprecated and just use iT (or find a better name)
 			RBININFO ("signature", R_CORE_BIN_ACC_SIGNATURE, NULL, 0);
 			break;
 		case 'z': // "iz"

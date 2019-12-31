@@ -707,6 +707,9 @@ fn (r2r mut R2R) run_jsn_tests() {
 			panic(err)
 		}
 		for line in lines {
+			if line.trim_space().len == 0 {
+				continue
+			}
 			ok := r2r.run_jsn_test(line)
 			mut mark := term.green('OK')
 			if ok {
@@ -802,37 +805,37 @@ fn (r2r mut R2R) run_jsn_test(cmd string) bool {
 fn (r2r R2R) load_jsn_tests(testpath string) {
 	// implementation is in run_jsn_tests
 	// nothing to load for now
-	}
+}
 
-	fn (r2r mut R2R) load_tests() {
-		r2r.cmd_tests = []
-		if !os.is_dir(r2r.db_path) {
-			eprintln('Cannot open -d ${r2r.db_path}')
-			return
-		}
-		if r2r.wants('json') {
-			r2r.load_jsn_tests('${r2r.db_path}/json')
-		}
-		if r2r.wants('asm') {
-			r2r.load_asm_tests('${r2r.db_path}/asm')
-		}
-		if r2r.wants('cmd') {
-			r2r.load_cmd_tests('${r2r.db_path}/cmd')
-		}
-		if r2r.wants('arch') {
-			$if x64 {
-				p := '${r2r.db_path}/archos'
-				$if linux {
-					r2r.load_cmd_tests('$p/linux-x64/')
-				} $else {
-					$if macos {
-						r2r.load_cmd_tests('$p/darwin-x64/')
-					} $else {
-						eprintln('Warning: archos tests not supported for current platform')
-					}
-				}
+fn (r2r mut R2R) load_tests() {
+	r2r.cmd_tests = []
+	if !os.is_dir(r2r.db_path) {
+		eprintln('Cannot open -d ${r2r.db_path}')
+		return
+	}
+	if r2r.wants('json') {
+		r2r.load_jsn_tests('${r2r.db_path}/json')
+	}
+	if r2r.wants('asm') {
+		r2r.load_asm_tests('${r2r.db_path}/asm')
+	}
+	if r2r.wants('cmd') {
+		r2r.load_cmd_tests('${r2r.db_path}/cmd')
+	}
+	if r2r.wants('arch') {
+		$if x64 {
+			p := '${r2r.db_path}/archos'
+			$if linux {
+				r2r.load_cmd_tests('$p/linux-x64/')
 			} $else {
-				eprintln('Warning: archos tests not supported for current platform')
+				$if macos {
+					r2r.load_cmd_tests('$p/darwin-x64/')
+				} $else {
+					eprintln('Warning: archos tests not supported for current platform')
+				}
 			}
+		} $else {
+			eprintln('Warning: archos tests not supported for current platform')
 		}
 	}
+}
