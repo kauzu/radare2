@@ -23,7 +23,7 @@ static const char *help_msg_i[] = {
 	"icg", "", "List classes as agn/age commands to create class hirearchy graphs",
 	"icq", "", "List classes, in quiet mode (just the classname)",
 	"icqq", "", "List classes, in quieter mode (only show non-system classnames)",
-	"iC", "", "Show signature info (entitlements, ...)",
+	"iC", "[j]", "Show signature info (entitlements, ...)",
 	"id", "[?]", "Debug information (source lines)",
 	"idp", "", "Load pdb file information",
 	"iD", " lang sym", "demangle symbolname for given language",
